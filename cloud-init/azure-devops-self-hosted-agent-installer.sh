@@ -1,10 +1,28 @@
 #!/bin/bash
 # Replace with your Azure Key Vault details
-key_vault_name=${AZURE_KEYVAULT_NAME}
-secret_name=${AZURE_KEYVAULT_PAT_SECRET_NAME}
-ado_url=${AZURE_DEVOPS_ORGANIZTION_URL}
-ado_pool=${AZURE_DEVOPS_POOL_NAME}
-ado_project=${AZURE_DEVOPS_PROJECT_NAME}
+key_vault_name=""
+secret_name=""
+ado_url=""
+ado_pool=""
+ado_project=""
+
+# Parse named arguments
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    --key_vault_name) key_vault_name="$2"; shift ;;
+    --secret_name) secret_name="$2"; shift ;;
+    --ado_url) ado_url="$2"; shift ;;
+    --ado_pool) ado_pool="$2"; shift ;;
+    --ado_project) ado_project="$2"; shift ;;
+    *) echo "Unknown parameter: $1"; exit 1 ;;
+    esac
+  shift
+done
+
+if [[ -z "$key_vault_name" || -z "$secret_name" || -z "$ado_url" || -z "$ado_pool" || -z "$ado_project" ]]; then
+  echo "Missing required arguments."
+  exit 1
+fi
 
 # Get the access token for the managed identity
 access_token=$(curl -H "Metadata: true" "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https://vault.azure.net" | jq -r '.access_token')
