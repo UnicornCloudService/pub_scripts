@@ -24,7 +24,7 @@ if [ -x "$(command -v systemctl)" ]
     sudo ./svc.sh install
     sudo ./svc.sh start
     else ./config.sh --pool ${ado_pool} --acceptteeeula --agent $HOSTNAME \
-    --url ${ado_url} --work _work --projectname ${ado_project} \
-    --auth PAT --token $pat_token}
+        --url ${ado_url} --work _work --projectname ${ado_project} \
+        --auth PAT --token $pat_token}
     ./run.sh
 fi
