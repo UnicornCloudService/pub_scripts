@@ -38,11 +38,11 @@ tar -zxvf vstsagent.tar.gz
 if [ -x "$(command -v systemctl)" ]
     then ./config.sh --pool ${ado_pool} --acceptteeeula --agent $HOSTNAME \
         --url ${ado_url} --work _work --projectname ${ado_project} \
-        --auth PAT --token ${pat_token} --runasservice
+        --auth PAT --token ${pat_token} --runasservice --replace  
     sudo ./svc.sh install
     sudo ./svc.sh start
     else ./config.sh --pool ${ado_pool} --acceptteeeula --agent $HOSTNAME \
         --url ${ado_url} --work _work --projectname ${ado_project} \
-        --auth PAT --token $pat_token}
+        --auth PAT --token ${pat_token} --replace
     ./run.sh
 fi
